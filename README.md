@@ -44,7 +44,7 @@ The Online Auction System is a web-based platform that allows users to create au
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/nchimunya-joseph/online-auction-system.git
+   git clone [https://github.com/nchimunya-joseph/online-auction-system.git](https://github.com/nchimunya-joseph/auction-marketplace)
    ```
 
 2. Install the required dependencies:
