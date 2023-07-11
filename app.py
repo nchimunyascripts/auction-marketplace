@@ -43,7 +43,6 @@ class Bid(db.Model):
     def __repr__(self):
         return f'<Bid {self.amount}>'
 
-
 db.create_all()
 
 
