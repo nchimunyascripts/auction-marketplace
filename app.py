@@ -43,7 +43,8 @@ class Bid(db.Model):
     def __repr__(self):
         return f'<Bid {self.amount}>'
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route('/api/users/register', methods=['POST'])
@@ -101,11 +102,9 @@ def login():
 def generate_access_token(username):
     payload = {'username': username}
     access_token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
-    return access_token.decode('utf-8')
+    return access_token
 
-@app.route('/api/auctions',
-
- methods=['POST'])
+@app.route('/api/auctions', methods=['POST'])
 def create_auction():
     data = request.get_json()
     title = data.get('title')
@@ -185,4 +184,4 @@ def delete_auction(auction_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=8080)
