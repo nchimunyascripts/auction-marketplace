@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 from flask_bcrypt import Bcrypt
 import jwt
 from models import db, User, Auction, Bid

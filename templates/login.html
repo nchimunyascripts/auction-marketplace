@@ -7,7 +7,7 @@ User Login
 {% if error %}
   <div class="error">{{ error }}</div>
 {% endif %}
-<form action="{{ url_for('login') }}" method="post">
+<form action="{{ url_for('profile') }}" method="post">
   <label for="username">Username:</label>
   <input type="text" id="username" name="username" required>
 
