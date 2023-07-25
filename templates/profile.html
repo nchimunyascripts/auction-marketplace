@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}User Profile{% endblock %}
+{% block content %}
+
+  <h2>User Profile</h2>
+  {% if access_token %}
+    <div class="message">Welcome, {{ username }}!</div>
+    <!-- <p>Your access token: {{ access_token }}</p> -->
+    <div>
+      <a href="{{ url_for('auctions') }}">Create Auction</a>
+      <!-- <a href="{{ url_for('update_auction', auction_id=auction_id) }}">Update Auction</a> -->
+      <!-- <a href="{{ url_for('place_bid', auction_id=auction_id) }}">Place Bid</a> -->
+    </div>
+  {% else %}
+    <div class="error">Access denied. Please log in.</div>
+    <p><a href="{{ url_for('login') }}">Login</a></p>
+  {% endif %}
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // If the access_token is not provided, redirect to the login page
+      {% if not access_token %}
+        setTimeout(function() {
+          window.location.href = '/login';
+        }, 3000); // Redirect after 3 seconds
+      {% endif %}
+    });
+  </script>
+
+{% endblock %}
