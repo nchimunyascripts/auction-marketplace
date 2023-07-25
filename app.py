@@ -21,45 +21,7 @@ with app.app_context():
 def landing_page():
     return render_template('index.html')
 
-<<<<<<< HEAD
 @app.route('/register', methods=['GET', 'POST'])
-=======
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.username}>'
-
-
-class Auction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text)
-    initial_bid = db.Column(db.Float, nullable=False)
-    end_date = db.Column(db.DateTime, nullable=False)
-
-    def __repr__(self):
-        return f'<Auction {self.title}>'
-
-
-class Bid(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    auction_id = db.Column(db.Integer, db.ForeignKey('auction.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-
-    def __repr__(self):
-        return f'<Bid {self.amount}>'
-
-with app.app_context():
-    db.create_all()
-
-
-@app.route('/api/users/register', methods=['POST'])
->>>>>>> fa91a04e03e4498b31d05102843c2edd758b3de3
 def register():
     if request.method == 'POST':
         data = request.form
@@ -115,7 +77,7 @@ def login():
 
     return render_template('login.html')
 
-<<<<<<< HEAD
+
 @app.route('/auctions', methods=['GET', 'POST'])
 def auctions():
     if request.method == 'POST':
@@ -132,22 +94,6 @@ def auctions():
 
         # Create auction object
         auction = Auction(title=title, description=description, initial_bid=initial_bid, end_date=end_date)
-=======
-# Utility function to generate access token
-def generate_access_token(username):
-    payload = {'username': username}
-    access_token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
-    return access_token
-
-@app.route('/api/auctions', methods=['POST'])
-def create_auction():
-    data = request.get_json()
-    title = data.get('title')
-    description = data.get('description')
-    initial_bid = data.get('initial_bid')
-    end_date = data.get('end_date')
->>>>>>> fa91a04e03e4498b31d05102843c2edd758b3de3
-
         # Store auction data
         db.session.add(auction)
         db.session.commit()
@@ -219,8 +165,4 @@ def generate_access_token(username):
     return access_token
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.run(debug=True)
-=======
-    app.run(debug=True, port=8080)
->>>>>>> fa91a04e03e4498b31d05102843c2edd758b3de3
