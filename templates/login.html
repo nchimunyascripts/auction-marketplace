@@ -4,15 +4,20 @@ User Login
 {% endblock %}
 {% block content %}
 <h2>User Login</h2>
-{% if error %}
-  <div class="error">{{ error }}</div>
-{% endif %}
-<form action="{{ url_for('profile') }}" method="post">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-danger">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+{% endwith %}
+<form action="{{ url_for('login') }}" method="post">
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required>
+  <input type="text" class="mb-2" id="username" placeholder="Username" name="username" required>
+
+  <input type="password" placeholder="Password" id="password" name="password" required>
 
   <button type="submit">Login</button>
 </form>

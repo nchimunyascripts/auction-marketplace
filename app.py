@@ -1,9 +1,12 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, redirect, url_for
 from flask_bcrypt import Bcrypt
 import jwt
+from flask import flash
 from models import db, User, Auction, Bid
 from datetime import datetime
 import secrets
+from flask_session import Session
+from functools import wraps
 
 secret_key = secrets.token_hex(32)
 
@@ -13,9 +16,24 @@ bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///auction.db'
 
+app.config['SECRET_KEY'] = secret_key
+app.config['SESSION_TYPE'] = 'filesystem'  # You can use other session types as well
+app.config['SESSION_USE_SIGNER'] = True   # To sign session cookies for added security
+app.config['SESSION_KEY_PREFIX'] = 'auction_app_'  # Prefix for session keys
+
 db.init_app(app)
 with app.app_context():
     db.create_all()
+Session(app)
+
+# Custom decorator to restrict access to authenticated users
+def login_required(view_func):
+    @wraps(view_func)
+    def wrapped_view(*args, **kwargs):
+        if 'access_token' not in session:
+            return redirect(url_for('landing_page'))
+        return view_func(*args, **kwargs)
+    return wrapped_view
 
 @app.route("/")
 def landing_page():
@@ -58,27 +76,34 @@ def login():
         data = request.form
         username = data.get('username')
         password = data.get('password')
-
+        
         # Find user by username
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            return render_template('login.html', error='Invalid username or password')
+            flash('Username not found', 'error')
+            return render_template('login.html')
 
         # Check password match
         if not bcrypt.check_password_hash(user.password, password):
-            return render_template('login.html', error='Invalid username or password')
+            flash('Invalid username or password', 'error')
+            return render_template('login.html')
 
         # Generate access token
         access_token = generate_access_token(user.username)
 
-        # Render the template with access_token as a parameter
-        return render_template('profile.html', access_token=access_token)
+        # Store the user's session data
+        session['username'] = user.username
+        session['access_token'] = access_token
+
+        # Redirect to the profile page
+        return redirect(url_for('profile'))
 
     return render_template('login.html')
 
 
 @app.route('/auctions', methods=['GET', 'POST'])
+@login_required
 def auctions():
     if request.method == 'POST':
         data = request.form
@@ -102,34 +127,63 @@ def auctions():
 
     return render_template('create_auction.html')
 
-@app.route('/auctions/<int:auction_id>/bids', methods=['POST'])
-def place_bid(auction_id):
-    data = request.form
-    user_id = data.get('user_id')
-    bid_amount = data.get('bid_amount')
+@app.route('/profile')
+@login_required
+def profile():
+    if 'username' in session:
+        username = session['username']
+        user = User.query.filter_by(username=username).first()
+        if user:
+            user_auctions = Auction.query.filter_by(user_id=user.id).all()
+            return render_template('profile.html', access_token=session.get('access_token'), username=username, user_auctions=user_auctions)
+    return render_template('profile.html', access_token=session.get('access_token'))
 
+@app.route('/auction', methods=['GET'])
+@login_required
+def list_auctions():
+    auctions = Auction.query.all()
+    return render_template('list_auctions.html', auctions=auctions)
+
+@app.route('/place_bid/<int:auction_id>', methods=['GET', 'POST'])
+@login_required
+def place_bid(auction_id):
     auction = Auction.query.get(auction_id)
+    
+    # Check if the user is logged in
+    if 'username' not in session:
+        # If the user is not logged in, redirect them to the login page
+        return redirect(url_for('login', auction_id=auction_id))
+    
+    # Get the user ID from the session
+    user_id = session['user_id']
+    
     if not auction:
         return render_template('place_bid.html', error='Auction not found')
 
     highest_bid = Bid.query.filter_by(auction_id=auction_id).order_by(Bid.amount.desc()).first()
 
-    if not bid_amount or bid_amount <= auction.initial_bid:
-        return render_template('place_bid.html', error='Invalid bid amount')
+    if request.method == 'POST':
+        bid_amount = data.get('bid_amount')
 
-    if highest_bid and bid_amount <= highest_bid.amount:
-        return render_template('place_bid.html', error='Bid amount must be higher than the current highest bid')
+        if not bid_amount or float(bid_amount) <= auction.initial_bid:
+            return render_template('place_bid.html', error='Invalid bid amount')
 
-    # Create bid object
-    bid = Bid(auction_id=auction_id, user_id=user_id, amount=bid_amount)
+        if highest_bid and float(bid_amount) <= highest_bid.amount:
+            return render_template('place_bid.html', error='Bid amount must be higher than the current highest bid')
+        
+        # Create bid object
+        bid = Bid(auction_id=auction_id, user_id=user_id, amount=bid_amount)
 
-    # Store bid data
-    db.session.add(bid)
-    db.session.commit()
+        # Store bid data
+        db.session.add(bid)
+        db.session.commit()
 
-    return render_template('place_bid.html', message='Bid placed successfully')
+        return render_template('place_bid.html', auction_id=auction_id, user_id=user_id)
+
+    return render_template('place_bid.html', auction_id=auction_id, user_id=user_id)
 
 @app.route('/auctions/<int:auction_id>', methods=['GET', 'POST'])
+@login_required
 def update_auction(auction_id):
     auction = Auction.query.get(auction_id)
     if not auction:
@@ -148,6 +202,7 @@ def update_auction(auction_id):
     return render_template('update_auction.html', auction=auction)
 
 @app.route('/auctions/<int:auction_id>/delete', methods=['POST'])
+@login_required
 def delete_auction(auction_id):
     auction = Auction.query.get(auction_id)
     if not auction:
@@ -157,6 +212,15 @@ def delete_auction(auction_id):
     db.session.commit()
 
     return render_template('delete_auction.html', message='Auction deleted successfully')
+
+@app.route('/logout')
+def logout():
+    # Clear the user's session data to log them out
+    # Assuming you are using Flask's default session
+    session.clear()
+
+    # Redirect the user to the landing page or any other page after logout
+    return redirect(url_for('landing_page'))
 
 # Utility function to generate access token
 def generate_access_token(username):

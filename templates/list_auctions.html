@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Auctions{% endblock %}
+{% block content %}
+<h1>List of Auctions</h1>
+<div class="list-group">
+    <ul style="list-style-type: none;">
+        {% for auction in auctions %}
+        <li class="list-group-item list-group-item-action mt-2 mb-2">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 text-uppercase fw-bold">{{ auction.title }}</h5>
+                <small class="text-body-secondary">
+                    {% if current_user and auction.user_id == current_user.id %}
+                        <a href="{{ url_for('update_auction', auction_id=auction.id) }}" class="btn btn-warning">Update</a>
+                        <a href="{{ url_for('delete_auction', auction_id=auction.id) }}" class="btn btn-danger">Delete</a>
+                    {% else %}
+                        <a href="{{ url_for('place_bid', auction_id=auction.id) }}" class="btn btn-primary">Place Bid</a>
+                    {% endif %}
+                </small>
+            </div>
+            <p class="mb-1">{{ auction.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
+
