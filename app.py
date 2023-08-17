@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, session, redirect, url_for
 from flask_bcrypt import Bcrypt
 import jwt
+from flask_login import LoginManager, login_user, current_user, login_required, UserMixin, logout_user
 from flask import flash
 from models import db, User, Auction, Bid
 from datetime import datetime
@@ -12,6 +13,7 @@ secret_key = secrets.token_hex(32)
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///auction.db'
@@ -26,6 +28,10 @@ with app.app_context():
     db.create_all()
 Session(app)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 # Custom decorator to restrict access to authenticated users
 def login_required(view_func):
     @wraps(view_func)
@@ -37,10 +43,13 @@ def login_required(view_func):
 
 @app.route("/")
 def landing_page():
-    return render_template('index.html')
+    is_landing_page = True  # Set the flag for landing page
+    
+    return render_template('index.html', is_landing_page=is_landing_page)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    is_landing_page = True 
     if request.method == 'POST':
         data = request.form
         username = data.get('username')
@@ -49,12 +58,12 @@ def register():
 
         # Validate input data
         if not username or not email or not password:
-            return render_template('register.html', error='Invalid input')
+            return render_template('register.html', error='Invalid input', is_landing_page=is_landing_page)
 
         # Check if username or email already exists
         existing_user = User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first()
         if existing_user:
-            return render_template('register.html', error='Username or email already exists')
+            return render_template('register.html', error='Username or email already exists', is_landing_page=is_landing_page)
 
         # Hash the password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -68,10 +77,11 @@ def register():
 
         return render_template('login.html', message='User registered successfully')
 
-    return render_template('register.html')
+    return render_template('register.html', is_landing_page=is_landing_page)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    is_landing_page = True 
     if request.method == 'POST':
         data = request.form
         username = data.get('username')
@@ -82,24 +92,25 @@ def login():
 
         if not user:
             flash('Username not found', 'error')
-            return render_template('login.html')
+            return render_template('login.html', is_landing_page=is_landing_page)
 
         # Check password match
         if not bcrypt.check_password_hash(user.password, password):
             flash('Invalid username or password', 'error')
-            return render_template('login.html')
+            return render_template('login.html', is_landing_page=is_landing_page)
 
         # Generate access token
         access_token = generate_access_token(user.username)
 
         # Store the user's session data
         session['username'] = user.username
+        session['user_id'] = user.id  # Store the user's ID in the session
         session['access_token'] = access_token
-
+        login_user(user)
         # Redirect to the profile page
         return redirect(url_for('profile'))
 
-    return render_template('login.html')
+    return render_template('login.html', is_landing_page=is_landing_page)
 
 
 @app.route('/auctions', methods=['GET', 'POST'])
@@ -118,7 +129,7 @@ def auctions():
             return render_template('create_auction.html', error='Invalid input')
 
         # Create auction object
-        auction = Auction(title=title, description=description, initial_bid=initial_bid, end_date=end_date)
+        auction = Auction(title=title, description=description, initial_bid=initial_bid, end_date=end_date, user_id=current_user.id)
         # Store auction data
         db.session.add(auction)
         db.session.commit()
@@ -163,13 +174,13 @@ def place_bid(auction_id):
     highest_bid = Bid.query.filter_by(auction_id=auction_id).order_by(Bid.amount.desc()).first()
 
     if request.method == 'POST':
-        bid_amount = data.get('bid_amount')
+        bid_amount = request.form.get('bid_amount')
 
         if not bid_amount or float(bid_amount) <= auction.initial_bid:
-            return render_template('place_bid.html', error='Invalid bid amount')
+            return render_template('place_bid.html', auction_id=auction_id, error='Invalid bid amount')
 
         if highest_bid and float(bid_amount) <= highest_bid.amount:
-            return render_template('place_bid.html', error='Bid amount must be higher than the current highest bid')
+            return render_template('place_bid.html', auction_id=auction_id, error='Bid amount must be higher than the current highest bid')
         
         # Create bid object
         bid = Bid(auction_id=auction_id, user_id=user_id, amount=bid_amount)
@@ -193,13 +204,15 @@ def update_auction(auction_id):
         data = request.form
         auction.title = data['title']
         auction.description = data['description']
-        auction.end_date = data['end_date']
+        end_date_str = data['end_date']
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%dT%H:%M')
 
+        auction.end_date = end_date
         db.session.commit()
 
-        return render_template('update_auction.html', auction=auction, message='Auction updated successfully')
+        return render_template('update_auction.html', auction=auction, auction_id=auction_id, message='Auction updated successfully')
 
-    return render_template('update_auction.html', auction=auction)
+    return render_template('update_auction.html', auction=auction, auction_id=auction_id)
 
 @app.route('/auctions/<int:auction_id>/delete', methods=['POST'])
 @login_required

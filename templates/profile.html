@@ -4,10 +4,7 @@
   <h2>User Profile</h2>
   {% if access_token %}
     <div class="message">Welcome, {{ username }}!</div>
-    <div class="mt-4">
-      <a href="{{ url_for('auctions') }}" class="btn">Create Auction</a>
-    </div>
-    <div class="mt-4">
+    <div class="mt-4 container">
       <h3>Your Auctions</h3>
       {% if user_auctions %}
         <ul>

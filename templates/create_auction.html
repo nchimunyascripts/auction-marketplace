@@ -4,11 +4,15 @@
 
   <h2>Create Auction</h2>
   {% if error %}
-    <div class="error">{{ error }}</div>
-  {% endif %}
-  {% if message %}
-    <div class="message">{{ message }}</div>
-  {% endif %}
+  <div class="alert alert-danger" width="450px" role="alert">
+    {{ error }}
+  </div>
+{% endif %}
+{% if message %}
+  <div class="alert alert-success" width="450px" role="alert">
+    {{ message }}
+  </div>
+{% endif %}
   <form action="{{ url_for('auctions') }}" method="post">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>

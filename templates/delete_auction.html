@@ -3,15 +3,18 @@
 {% block content %}
   <h2>Delete Auction</h2>
   {% if error %}
-    <div class="error">{{ error }}</div>
-  {% endif %}
-  {% if message %}
-    <div class="message">{{ message }}</div>
-  {% endif %}
+  <div class="alert alert-danger" width="450px" role="alert">
+    {{ error }}
+  </div>
+{% endif %}
+{% if message %}
+  <div class="alert alert-success" width="450px" role="alert">
+    {{ message }}
+  </div>
+{% endif %}
   <p>Are you sure you want to delete this auction?</p>
   <form action="{{ url_for('delete_auction', auction_id=auction_id) }}" method="post">
-    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_method" value="post">
     <button type="submit">Delete Auction</button>
   </form>
-  <p>Go back to <a href="{{ url_for('profile') }}">Profile</a></p>
 {% endblock %}

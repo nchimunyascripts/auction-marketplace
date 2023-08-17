@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}Auctions{% endblock %}
 {% block content %}
-<h1>List of Auctions</h1>
-<div class="list-group">
-    <ul style="list-style-type: none;">
+<div class="list-group container">
+    <h1 style="margin-left: 10px;">Auctions</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for auction in auctions %}
-        <li class="list-group-item list-group-item-action mt-2 mb-2">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1 text-uppercase fw-bold">{{ auction.title }}</h5>
-                <small class="text-body-secondary">
-                    {% if current_user and auction.user_id == current_user.id %}
-                        <a href="{{ url_for('update_auction', auction_id=auction.id) }}" class="btn btn-warning">Update</a>
-                        <a href="{{ url_for('delete_auction', auction_id=auction.id) }}" class="btn btn-danger">Delete</a>
-                    {% else %}
-                        <a href="{{ url_for('place_bid', auction_id=auction.id) }}" class="btn btn-primary">Place Bid</a>
-                    {% endif %}
-                </small>
+            <div class="col">
+              <div class="card">
+                <img src="{{ url_for('static', filename='img/placeholder.jpg')}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ auction.title }}</h5>
+                    <p class="card-text text-truncate">{{ auction.description }}</p>
+                  <p class="card-text">
+                    <small class="text-body-secondary">
+                        {% if current_user and auction.user_id == current_user.id %}
+                            <a href="{{ url_for('update_auction', auction_id=auction.id) }}" class="btn btn-warning">Update</a>
+                            <a href="{{ url_for('delete_auction', auction_id=auction.id) }}" class="btn btn-danger">Delete</a>
+                        {% else %}
+                            <a href="{{ url_for('place_bid', auction_id=auction.id) }}" class="btn btn-primary">Place Bid</a>
+                        {% endif %}
+                    </small>
+                  </p>
+                </div>
+              </div>
             </div>
-            <p class="mb-1">{{ auction.description }}</p>
-        </li>
         {% endfor %}
-    </ul>
-  </div>
+    </div>
+
+</div>
 {% endblock %}
 

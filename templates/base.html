@@ -9,15 +9,16 @@
 </head>
 
 <body>
+  {% if not is_landing_page %}
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ url_for('landing_page') }}">Marketplace</a>
+      <a class="navbar-brand" href="{{ url_for('list_auctions') }}">Marketplace</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('landing_page') }}">Home</a>
+          <a class="nav-link active" aria-current="page" href="{{ url_for('list_auctions') }}">Home</a>
           {% if session['access_token'] %}
               <!-- Links for logged-in users -->
               <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
@@ -33,8 +34,9 @@
         </div>
       </div>
     </div>
-  </nav>  
-    <div class="container">
+  </nav>
+  {% endif %}
+    <div>
         {% block content %}{% endblock %}
     </div>
 </body>

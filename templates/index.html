@@ -23,48 +23,18 @@
   <section id="intro">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="{{ url_for('static', filename='img/cover-img.jpg')}}" class="d-block w-100 img" alt="...">
           <div class="carousel-caption d-none d-md-block">
-            <h5>Auction Platform</h5>
-            <p>A platform for online auctions</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="{{ url_for('static', filename='img/cover-img-2.jpg') }}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Auction Platform</h5>
-            <p>A platform for online auctions</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="{{ url_for('static', filename='img/cover--img-3.jpg') }}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Auction Platform</h5>
+            <h1>Auction Platform</h1>
             <p>A platform for online auctions</p>
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
-    <div class="app_link">
+    <div class="app_link mt-3 mb-3">
       <a class="button" href="{{ url_for('login') }}">Auction Now</a>
     </div>
   </section>
@@ -73,21 +43,21 @@
     <section id="about">
       <h2>About</h2>
 
-      <p>This project was inspired by my personal experiences and passion for [insert inspiration]. It all started
-        [describe the story behind the project]. As a Portfolio Project for Holberton School, I had the opportunity to
+      <p>This project was inspired by my personal experiences and passion for ebay and Auction.com. It all started
+        as a simple project with no GUI, just working with a plain console application. As a Portfolio Project for Holberton School, I had the opportunity to
         bring this idea to life and showcase my skills and creativity.</p>
 
       <p>This project was developed by Joseph Nchimunya:</p>
 
       <ul id="social_links">
         <li class="link-cards"><a href="https://www.linkedin.com/in/joseph-mathias-nchimunya-4aaa54198/" target="_blank">
-            <img src="{{ url_for('static', filename='font-icons/linkedin.svg')}}" width="2%" alt="LinkedIn">
+            <img src="{{ url_for('static', filename='font-icons/linkedin.svg')}}" width="20%" alt="LinkedIn">
             LinkedIn</a></li>
         <li class="link-cards"><a href="https://twitter.com/xvlll8two" target="_blank">
-            <img src="{{ url_for('static', filename='font-icons/twitter.svg')}}" width="2%" alt="Twitter">
+            <img src="{{ url_for('static', filename='font-icons/twitter.svg')}}" width="20%" alt="Twitter">
             Twitter</a></li>
         <li class="link-cards"><a href="https://github.com/nchimunya-joseph" target="_blank">
-            <img src="{{ url_for('static', filename='font-icons/github.svg')}}" width="2%" alt="GitHub"> GitHub</a></li>
+            <img src="{{ url_for('static', filename='font-icons/github.svg')}}" width="20%" alt="GitHub"> GitHub</a></li>
       </ul>
 
       <p>For more details and to contribute to the project, please visit the <a

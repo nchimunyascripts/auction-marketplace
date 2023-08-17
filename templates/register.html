@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}User Registration{% endblock %}
 {% block content %}
-<h2>User Registration</h2>
-<div class="infor-messages">
-  {% if error %}
-  <div class="error">{{ error }}</div>
+<h2 class="mt-4">User Registration</h2>
+{% if error %}
+  <div class="alert alert-danger" width="450px" role="alert">
+    {{ error }}
+  </div>
 {% endif %}
 {% if message %}
-  <div class="message">{{ message }}</div>
+  <div class="alert alert-success" width="450px" role="alert">
+    {{ message }}
+  </div>
 {% endif %}
 </div>
 <form action="{{ url_for('register') }}" method="post">

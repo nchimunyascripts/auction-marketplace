@@ -3,22 +3,26 @@
 {% block content %}
 <h2>Update Auction</h2>
 {% if error %}
-  <div class="error">{{ error }}</div>
+  <div class="alert alert-danger" width="450px" role="alert">
+    {{ error }}
+  </div>
 {% endif %}
 {% if message %}
-  <div class="message">{{ message }}</div>
+  <div class="alert alert-success" width="450px" role="alert">
+    {{ message }}
+  </div>
 {% endif %}
 <form action="{{ url_for('update_auction', auction_id=auction_id) }}" method="post">
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" value="{{ auction.title }}" required>
 
-  <label for="description">Description:</label>
-  <textarea id="description" name="description">{{ auction.description }}</textarea>
+  <label for="description" class="mt-2">Description:</label>
+  <textarea id="description" name="description" cols="5" rows="8">{{ auction.description }}</textarea>
 
-  <label for="end_date">End Date:</label>
+  <label for="end_date" class="mt-2">End Date:</label>
   <input type="datetime-local" id="end_date" name="end_date" value="{{ auction.end_date }}" required>
 
   <button type="submit">Update Auction</button>
 </form>
-<p>Go back to <a href="{{ url_for('profile') }}">Profile</a></p>
-  {% endblock %}
+
+{% endblock %}

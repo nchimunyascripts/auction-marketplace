@@ -3,10 +3,14 @@
 {% block content %}
 <h2>Place Bid</h2>
 {% if error %}
-  <div class="error mb-2">{{ error }}</div>
+  <div class="alert alert-danger" width="450px" role="alert">
+    {{ error }}
+  </div>
 {% endif %}
 {% if message %}
-  <div class="message mb-2">{{ message }}</div>
+  <div class="alert alert-success" width="450px" role="alert">
+    {{ message }}
+  </div>
 {% endif %}
 <form action="{{ url_for('place_bid', auction_id=auction_id) }}" method="post">
   <input type="hidden" id="user_id" name="user_id" value="{{ user_id }}">

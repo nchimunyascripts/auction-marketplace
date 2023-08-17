@@ -1,10 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
@@ -12,6 +13,11 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     
     # Define the relationship with Auction model
+    def is_active(self):
+        return True  # Change this logic if you have user activation
+
+    def get_id(self):
+        return str(self.id)  # Convert the id to a string
     auctions = relationship('Auction', back_populates='user')
 
 class Auction(db.Model):
@@ -28,9 +34,11 @@ class Auction(db.Model):
 
 
 class Bid(db.Model):
+    __tablename__ = 'bids'
     id = db.Column(db.Integer, primary_key=True)
-    auction_id = db.Column(db.Integer, db.ForeignKey('auction.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    auction_id = db.Column(db.Integer, db.ForeignKey('auctions.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     amount = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
