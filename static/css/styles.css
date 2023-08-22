@@ -52,20 +52,22 @@ body {
   .link-cards > a{
     display: flex;
     justify-content: center;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
     margin-left: 20px;
     margin-right: 5px;
     color: white;
     font-weight: 700;
+    font-size: 100%;
     text-decoration: none;
-    border: 1px solid rgb(85, 85, 247);
-    padding: 8px;
-    background-color: rgb(85, 85, 247);
-    border-radius: 5px;
+    border: 1px solid #dc3545;
+    background-color: #dc3545;
+    border-radius: 50%;
     margin: 10px;
-    width: 150px;
+    width: 50px;
+    height: 50px;
   }
+
   #social_links{
     list-style: none;
     margin: 0;
@@ -110,15 +112,6 @@ body {
     border-radius: 5px !important;
     background-color: #dc3545;
   }
-  .update_btn{
-    display: inline;
-    background-color: #ffc107;
-    border-radius: #ffc107;
-    color: black;
-    font-weight: 500;
-    text-decoration: none;
-    text-align: center;
-  }
   .button{
     display: block;
     padding: 10px;
@@ -133,7 +126,8 @@ body {
     border-radius: 5px;
     background-color: #dc3545;
   }
-  button:hover, .button:hover {
+  
+  .button:hover, .button:hover {
     background-color: #c82333;
   }
 .btn:focus{
@@ -162,41 +156,12 @@ img {
   max-height: 100%;
   object-fit: cover;
 }
-.features-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.feature {
-  width: 300px;
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 0px 5px;
-}
-
-.feature img {
-  width: 100%;
-  height: auto;
-}
-
-.feature h3 {
-  margin-top: 10px;
-  font-size: 18px;
-}
-
-.feature p {
-  margin-top: 5px;
-}
 .error {
   color: white;
   font-weight: bold;
   text-align: center;
   border: 1px solid #dd5b68;
   width: 350px;
-  /* margin: auto; */
   border-radius: 2px;
   padding: 10px;
   background-color: #dd5b68;

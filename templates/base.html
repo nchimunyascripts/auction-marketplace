@@ -10,28 +10,44 @@
 
 <body>
   {% if not is_landing_page %}
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ url_for('list_auctions') }}">Marketplace</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('list_auctions') }}">Home</a>
-          {% if session['access_token'] %}
-              <!-- Links for logged-in users -->
-              <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
-              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-              <a class="nav-link" href="{{ url_for('auctions') }}">Create Auction</a>
-              <a class="nav-link" href="{{ url_for('list_auctions') }}">Auctions</a>
-              <a class="nav-link" aria-disabled="true" style="color: gray;align-self: end;">{{ session['username'] }}</a>
-          {% else %}
-              <!-- Links for users who are not logged in -->
-              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-          {% endif %}
-        </div>
+      <div class="collapse navbar-collapse" id="navbarText">
+        {% if session['access_token'] %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('list_auctions') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auctions') }}">Create Auction</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list_auctions') }}">Auctions</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          {{ session['username'] }}
+        </span>
+        {% else %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+          </li>
+        </ul>
+        {% endif %}
       </div>
     </div>
   </nav>
