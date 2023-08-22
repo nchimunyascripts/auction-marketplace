@@ -5,12 +5,15 @@ body {
     padding: 0;
   }
   
-  form{
+  .form{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+    max-width: 400px;
   }
+
   h2 {
     margin-top: 0;
     text-align: center;
@@ -22,6 +25,7 @@ body {
     text-align: center;
     margin-top: 10px;
   }
+
 .infor-messages{
   display: flex;
   flex-direction: column;
@@ -29,6 +33,7 @@ body {
   align-items: center;
   margin-bottom: 20px;
 }
+
   label {
     display: block;
     margin-bottom: 5px;
@@ -43,6 +48,7 @@ body {
     border-radius: 3px;
     outline: #ddd;
   }
+
   .link-cards > a{
     display: flex;
     justify-content: center;
@@ -91,15 +97,8 @@ body {
     height: 35px;
   }
   
-  /* Specific styles for update_auction.html */
-  form {
-    /* Center the form for better presentation */
-    margin: 0 auto;
-    max-width: 400px;
-  }
-  
   /* Specific styles for delete_auction.html */
-  button, .button {
+.button, .update_btn {
     display: block;
     padding: 10px;
     width: 100%;
@@ -107,10 +106,18 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    /* width: 250px; */
     margin-top: 10px !important;
     border-radius: 5px !important;
     background-color: #dc3545;
+  }
+  .update_btn{
+    display: inline;
+    background-color: #ffc107;
+    border-radius: #ffc107;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
   }
   .button{
     display: block;

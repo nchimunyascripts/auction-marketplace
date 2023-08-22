@@ -169,7 +169,7 @@ def place_bid(auction_id):
     user_id = session['user_id']
     
     if not auction:
-        return render_template('place_bid.html', error='Auction not found')
+        return render_template('place_bid.html', error='Auction not found', description=auction.description)
 
     highest_bid = Bid.query.filter_by(auction_id=auction_id).order_by(Bid.amount.desc()).first()
 
@@ -177,10 +177,10 @@ def place_bid(auction_id):
         bid_amount = request.form.get('bid_amount')
 
         if not bid_amount or float(bid_amount) <= auction.initial_bid:
-            return render_template('place_bid.html', auction_id=auction_id, error='Invalid bid amount')
+            return render_template('place_bid.html', auction_id=auction_id, error='Invalid bid amount', description=auction.description)
 
         if highest_bid and float(bid_amount) <= highest_bid.amount:
-            return render_template('place_bid.html', auction_id=auction_id, error='Bid amount must be higher than the current highest bid')
+            return render_template('place_bid.html', auction_id=auction_id, error='Bid amount must be higher than the current highest bid', description=auction.description)
         
         # Create bid object
         bid = Bid(auction_id=auction_id, user_id=user_id, amount=bid_amount)
@@ -189,9 +189,9 @@ def place_bid(auction_id):
         db.session.add(bid)
         db.session.commit()
 
-        return render_template('place_bid.html', auction_id=auction_id, user_id=user_id)
+        return render_template('place_bid.html', auction_id=auction_id, user_id=user_id, description=auction.description)
 
-    return render_template('place_bid.html', auction_id=auction_id, user_id=user_id)
+    return render_template('place_bid.html', auction_id=auction_id, user_id=user_id,description=auction.description)
 
 @app.route('/auctions/<int:auction_id>', methods=['GET', 'POST'])
 @login_required
@@ -214,17 +214,21 @@ def update_auction(auction_id):
 
     return render_template('update_auction.html', auction=auction, auction_id=auction_id)
 
-@app.route('/auctions/<int:auction_id>/delete', methods=['POST'])
+@app.route('/auctions/<int:auction_id>/delete', methods=['POST', 'DELETE'])
 @login_required
 def delete_auction(auction_id):
-    auction = Auction.query.get(auction_id)
-    if not auction:
-        return render_template('delete_auction.html', error='Auction not found')
+    if request.method == 'POST' or request.method == 'DELETE':
+        auction = Auction.query.get(auction_id)
+        if not auction:
+            return render_template('delete_auction.html', error='Auction not found')
 
-    db.session.delete(auction)
-    db.session.commit()
+        db.session.delete(auction)
+        db.session.commit()
 
-    return render_template('delete_auction.html', message='Auction deleted successfully')
+        return render_template('delete_auction.html', message='Auction deleted successfully')
+    
+    # Handle other HTTP methods if needed
+    # return redirect(url_for('some_other_route'))
 
 @app.route('/logout')
 def logout():

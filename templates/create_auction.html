@@ -4,21 +4,21 @@
 
   <h2>Create Auction</h2>
   {% if error %}
-  <div class="alert alert-danger" width="450px" role="alert">
+  <div class="alert alert-danger" style="width: 450px; margin: 0 auto; text-align: center;" role="alert">
     {{ error }}
   </div>
 {% endif %}
 {% if message %}
-  <div class="alert alert-success" width="450px" role="alert">
+  <div class="alert alert-success" style="width: 450px; margin: 0 auto; text-align: center;" role="alert">
     {{ message }}
   </div>
 {% endif %}
-  <form action="{{ url_for('auctions') }}" method="post">
+  <form action="{{ url_for('auctions') }}" class="form" method="post">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description"></textarea>
+    <textarea id="description" name="description" cols="5" rows="8"></textarea>
 
     <label for="initial_bid">Initial Bid:</label>
     <input type="number" step="0.01" id="initial_bid" name="initial_bid" required>
@@ -26,6 +26,6 @@
     <label for="end_date">End Date:</label>
     <input type="datetime-local" id="end_date" name="end_date" required>
 
-    <button type="submit">Create Auction</button>
+    <button type="submit" class="button">Create Auction</button>
   </form>
 {% endblock %}

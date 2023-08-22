@@ -7,13 +7,13 @@
     <div class="mt-4 container">
       <h3>Your Auctions</h3>
       {% if user_auctions %}
-        <ul>
-          {% for auction in user_auctions %}
-            <li>{{ auction.title }}</li>
-          {% endfor %}
-        </ul>
+      <ul class="list-group list-group-flush">
+        {% for auction in user_auctions %}
+        <li class="list-group-item">{{ auction.title }}</li>
+        {% endfor %}
+      </ul>
       {% else %}
-        <p>No auctions created yet.</p>
+      <h1 class="display-2">No auctions created yet.</h1>
       {% endif %}
     </div>
   {% else %}
@@ -22,13 +22,13 @@
   {% endif %}
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    // $(document).ready(function() {
-    //   // If the access_token is not provided, redirect to the login page
-    //   {% if not access_token %}
-    //     setTimeout(function() {
-    //       window.location.href = '/login';
-    //     }, 3000); // Redirect after 3 seconds
-    //   {% endif %}
-    // });
+    $(document).ready(function() {
+      // If the access_token is not provided, redirect to the login page
+      {% if not access_token %}
+        setTimeout(function() {
+          window.location.href = '/login';
+        }, 3000); // Redirect after 3 seconds
+      {% endif %}
+    });
   </script>
 {% endblock %}

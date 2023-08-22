@@ -6,20 +6,20 @@ User Login
 <h2 class="mt-4">User Login</h2>
 {% with messages = get_flashed_messages() %}
     {% if messages %}
-      <div class="alert alert-danger">
+      <div class="alert alert-danger mb-3" style="width: 450px; margin: 0 auto; text-align: center;">
         {% for message in messages %}
           {{ message }}
         {% endfor %}
       </div>
     {% endif %}
 {% endwith %}
-<form action="{{ url_for('login') }}" method="post">
+<form action="{{ url_for('login') }}" class="form" method="post">
 
   <input type="text" class="mb-2" id="username" placeholder="Username" name="username" required>
 
   <input type="password" placeholder="Password" id="password" name="password" required>
 
-  <button type="submit">Login</button>
+  <button type="submit" class="button">Login</button>
 </form>
 <p class="msg">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
 {% endblock %}
