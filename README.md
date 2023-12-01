@@ -8,7 +8,6 @@ The Online Auction System is a web-based platform that allows users to create au
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
-- [API Documentation](#api-documentation)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -18,7 +17,6 @@ The Online Auction System is a web-based platform that allows users to create au
 - Auction Creation: Users can create new auction listings, providing details such as title, description, starting bid, and end date.
 - Bidding: Users can place bids on active auctions and manage their bidding activity.
 - Auction Search: Users can search for auctions based on various criteria such as title, category, and price range.
-- Payment Integration: Integration with a payment gateway API to facilitate secure payment transactions for won auctions.
 - User Profile: Users have access to their profile information and can update their details.
 - Category Management: Users can view available auction categories and explore auctions by category.
 
@@ -32,10 +30,11 @@ The Online Auction System is a web-based platform that allows users to create au
 - Frontend Development:
   - HTML, CSS, JavaScript: Web technologies for building the frontend user interface.
   - CSS Frameworks: Bootstrap or Bulma for responsive design and styling.
-- API Documentation:
-  - Markdown or Swagger UI: Documenting API endpoints for reference and usage.
 - Authentication and Authorization:
   - Flask-JWT: Lightweight authentication library for securing API endpoints.
+
+## Future Implementation
+- Payment Integration: Integration with a payment gateway API to facilitate secure payment transactions for won auctions.
 - Payment Gateway Integration:
   - Stripe or PayPal: Payment gateway API for secure payment processing.
 
@@ -69,11 +68,7 @@ The Online Auction System is a web-based platform that allows users to create au
    python app.py
    ```
 
-2. Access the application in your web browser at `http://localhost:5000`.
-
-## API Documentation
-
-The API documentation for the Online Auction System can be found [here](/api-docs).
+2. Access the application in your web browser at [https://auction-marketplace-six.vercel.app/](https://auction-marketplace-six.vercel.app/).
 
 ## Contributing
 
