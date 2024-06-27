@@ -1,13 +1,13 @@
 {
     "builds": [
         {
-            "src": "app.py",
-            "use": "@vercel/python"
+            "src": "*.py",
+            "use": "@liudonghua123/now-flask"
         }
     ],
     "routes":[
         {
-            "src": "/(.*)",
+            "src": "(.*)",
             "dest": "app.py"
         }
     ]
