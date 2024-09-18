@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <div class="card mb-3">
+      <img class="auction__image" src="{{ url_for('static', filename='item_pics/placeholder.jpg')}}" alt="Card image cap">
+      <div class="card-body">
+        <small class="text-muted">Posted by: 
+          <a href="{{ url_for('user_auctions', username=auction.bid.username) }}">
+            {{ auction.bid.username }}
+          </a>
+        </small>
+        {% if auction.bid == current_user %}
+          <a href="{{ url_for('update_auction', auction_id=auction.id) }}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
+          <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal", data-target="#deleteModal">Delete</button>
+        {% endif %}
+        <h5 class="card-title">{{ auction.title }}</h5>
+        <p class="card-text">{{ auction.description }}</p>
+        <p class="card-text"><small class="text-muted">Ends on: {{ auction.end_date }} with Initial Bid at {{ auction.initial_bid }} </small></p>
+      </div>
+    </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Auction?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this Auction {{ auction.title }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{ url_for('delete_auction', auction_id=auction.id) }}" method="post">
+          <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+

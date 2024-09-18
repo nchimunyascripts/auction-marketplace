@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for auction in auctions.items %}
+            <div class="col-md-4 mt-3">
+              <div class="card">
+                <img src="{{ url_for('static', filename='item_pics/placeholder.jpg') }}" class="card-img-top" alt="placeholder for auctions">
+                <div class="card-body">
+                    <h2 class=""><a class="card-title" href="{{url_for('auction', auction_id=auction.id)}}">{{ auction.title }}</a></h2>
+                    <small class="text-muted">Posted by: 
+                      <a href="{{ url_for('user_auctions', username=auction.bid.username) }}">
+                        {{ auction.bid.username }}
+                      </a>
+                    </small>
+                    <p class="card-text text-truncate">{{ auction.description }}</p>
+                    <small class="text-muted">KMW {{ auction.initial_bid }}</small>
+                    <small class="text-muted">{{ auction.end_date }}</small>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% for page_num in auctions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if auctions.page == page_num %}
+          <a class="btn btn-info mb-4 mt-2" href="{{url_for('auctions', page=page_num)}}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4 mt-2" href="{{url_for('auctions', page=page_num)}}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+      ...
+      {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
