@@ -68,7 +68,7 @@ The Online Auction System is a web-based platform that allows users to create au
    python app.py
    ```
 
-2. Access the application in your web browser at [https://auction-marketplace-six.vercel.app/](https://auction-marketplace-six.vercel.app/).
+2. Access the application in your web browser at [http://nchimunya.pythonanywhere.com/](http://nchimunya.pythonanywhere.com/).
 
 ## Contributing
 

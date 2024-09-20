@@ -1,7 +1,8 @@
 """Models Module"""
 from datetime import datetime
 from itsdangerous import URLSafeTimedSerializer as Serializer
-from auction_app import db, login_manager, app
+from flask import current_app
+from auction_app import db, login_manager
 from flask_login import UserMixin
 
 @login_manager.user_loader
@@ -21,11 +22,11 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     auctions = db.relationship('Auction', backref='bid', lazy=True)
     def get_reset_token(self):
-        s = Serializer(app.config['SECRET_KEY'])
+        s = Serializer(current_app.config['SECRET_KEY'])
         return s.dumps({'user_id': self.id})
     @staticmethod
     def verify_reset_token(token, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'])
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
             user_id = s.load(token, max_age=expires_sec)['user_id']
         except:

@@ -37,7 +37,7 @@
           {% endfor %}
         </div>
       {% else %}
-      {{ form.last_name(class='input-field mb-2', placeholder="First Name")}}
+      {{ form.last_name(class='input-field mb-2', placeholder="Last Name")}}
       {% endif %}
     </div>
     <div class="form-group">
@@ -82,6 +82,6 @@
   </div>
 </form>
 <div class="text-muted msg">
-  <small>Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Login</a></small>
+  <small>Already have an account? <a class="ml-2" href="{{ url_for('users.login') }}">Login</a></small>
 </div>
 {% endblock %}

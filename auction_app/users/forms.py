@@ -1,10 +1,10 @@
 """Form Module"""
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import (StringField, EmailField, SubmitField, BooleanField, DateTimeLocalField,
-                     PasswordField, TextAreaField, DecimalField, DateTimeField)
-from wtforms.validators import DataRequired, Email,EqualTo, Length, ValidationError
 from auction_app.models import User
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import (StringField, EmailField, SubmitField, BooleanField,
+                     PasswordField)
+from wtforms.validators import DataRequired, Email,EqualTo, Length, ValidationError
 from flask_login import current_user
 
 class RegestrationForm(FlaskForm):
@@ -55,18 +55,7 @@ class UpdateAccountForm(FlaskForm):
             email = User.query.filter_by(email=email.data).first()
             if email:
                 raise ValidationError('An Account with this email already exists. Please login!')
-class CreateAuctionForm(FlaskForm):
-    """Create Auction Class"""
-    title = StringField('Title', validators=[DataRequired(), Length(min=2, max=20)])
-    item_image_file = FileField('Auction Image', validators=[FileAllowed(['jpg', 'png'])])
-    description = TextAreaField('Description', validators=[DataRequired()])
-    initial_bid = DecimalField('Initial Bid', validators=[DataRequired()])
-    end_date = DateTimeLocalField('End Date')
-    submit = SubmitField("Create Auction")
-class PlaceBidForm(FlaskForm):
-    """Place Bid"""
-    bid_amount = DecimalField('Place Bid', validators=[DataRequired()])
-    submit = SubmitField("Place Bid")
+
 class RequestRestForm(FlaskForm):
     """Request Reset"""
     email = EmailField('Email', validators=[DataRequired(), Email()])

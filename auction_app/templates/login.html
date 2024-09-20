@@ -36,11 +36,11 @@
   <div class="form-group">
     {{ form.submit(class="button") }}
     <small class="text-muted" style="display: block;text-align: center; font-weight: 700; margin-top: 10px;">
-      <a href="{{url_for('reset_request')}}">Forgot Password</a>
+      <a href="{{url_for('users.reset_request')}}">Forgot Password</a>
     </small>
   </div>
 </form>
 <div class="text-muted msg">
-  <small>Need an account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a></small>
+  <small>Need an account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a></small>
 </div>
 {% endblock %}
