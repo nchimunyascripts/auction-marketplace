@@ -28,8 +28,10 @@ def create_app(config_class=Config):
     from auction_app.users.routes import users
     from auction_app.auctions.routes import auction_
     from auction_app.main.routes import main
+    from auction_app.errors.haddlers import errors
     app.register_blueprint(users)
     app.register_blueprint(auction_)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
     
     return app

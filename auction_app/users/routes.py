@@ -13,7 +13,7 @@ users = Blueprint('users', __name__)
 def register():
     """Registration route"""
     if current_user.is_authenticated:
-        return redirect(url_for('auctions'))
+        return redirect(url_for('auctions.auctions'))
     form = RegestrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -49,9 +49,8 @@ def logout():
     return redirect(url_for('auctions.auctions'))
 
 @users.route('/profile', methods=['GET', 'POST'])
-@users.route('/profile/<string:username>', methods=['GET', 'POST'])
 @login_required
-def profile(username):
+def profile():
     """User profile"""
     form = UpdateAccountForm()
     if form.validate_on_submit():
@@ -70,12 +69,9 @@ def profile(username):
         form.first_name.data = current_user.first_name
         form.last_name.data = current_user.last_name
         form.email.data = current_user.email
-    user = User.query.filter_by(username=username).first_or_404()
-    auctions = Auction.query.filter_by(bid=user)\
-        .order_by(Auction.date_posted.desc())
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title="Profile",
-                           image_file=image_file, form=form, auctions=auctions)
+                           image_file=image_file, form=form)
 
 @users.route('/user/<string:username>', methods=['GET', 'POST'])
 def user_auctions(username):

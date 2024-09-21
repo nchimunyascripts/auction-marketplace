@@ -6,31 +6,49 @@
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="{{ url_for('static', filename='img/cover-img.jpg')}}" class="d-block w-100 img-carousel" alt="...">
-          <div class="carousel-caption d-none d-md-block overlay">
+          <img src="{{ url_for('static', filename='img/cover-img.jpg')}}" class="d-block w-100 img-carousel carousel__img" alt="...">
+          <div class="carousel-caption">
             <h1>Auction Platform</h1>
             <p>A platform for online auctions</p>
+            <div class="app_link mb-3">
+              <a class="button" href="{{ url_for('users.register') }}">Get Started</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="app_link mb-3">
-      <a class="button" href="{{ url_for('users.login') }}">Auction Now</a>
-    </div>
   </section>
 
-  <div class="container-fluid">
+  <div class="container">
     <section id="about">
       <h2>About</h2>
 
       <div class="clearfix">
-        <img src="{{ url_for('static', filename='img/matter.jpg')}}" class="col-md-6 float-md-end mb-3 ms-md-3" alt="...">
-        <p>This project, borne out of my personal experiences and fueled by my fervor for platforms like eBay and Auction.com, has been a remarkable journey from inception to reality. What began as a modest venture, characterized by a barebones console application, has evolved into a substantial endeavor, now boasting a full-fledged GUI.</p>
-        <p>As part of my commitment to excellence at Holberton School, this endeavor has not only honed my technical prowess but also allowed me to channel my passion and creativity into a tangible manifestation of my abilities.</p>
-        <p>From the outset, this project was a means to encapsulate the essence of online auctions and commerce, inspired by the transformative impact of platforms that revolutionized the way we buy and sell. The concept initially took shape in the form of a rudimentary console application, serving as a foundation for the bigger vision that lay ahead.</p>
-        <p>As the project transitioned into a Portfolio Project for Holberton School, the scope expanded exponentially. The metamorphosis from a simple console application to a feature-rich, user-friendly GUI was driven by an unyielding determination to showcase not only technical aptitude but also the capacity to blend functionality with aesthetics.</p>
-        <p>Through meticulous development, intricate design considerations, and an unwavering commitment to detail, this project is a testament to my journey as a developer. It underscores my evolution from a novice programmer to an aspiring professional, ready to navigate the complex terrain of software development.</p>
-        <p>I am immensely proud to present this project as the culmination of my efforts. Its transformation from a concept inspired by personal encounters with online auctions into a tangible creation reflects my dedication to mastering the craft of programming. The project, conceived and brought to life by me, Joseph Nchimunya, stands as an embodiment of my journey, my aspirations, and my commitment to the world of software engineering.</p>
+        <div class="row">
+          <img src="{{ url_for('static', filename='img/matter.jpg')}}" class="col-md-6 block" alt="...">
+          <div class="block col-md-6">
+            <p>This project, borne out of my personal experiences and fueled by my fervor for platforms like eBay and Auction.com, 
+              has been a remarkable journey from inception to reality. What began as a modest venture, characterized by a barebones 
+              console application, has evolved into a substantial endeavor, now boasting a full-fledged GUI.</p>
+              <p class="block">As part of my commitment to excellence at Holberton School, this endeavor has not only 
+                honed my technical prowess but also allowed me to channel my passion and creativity into a tangible manifestation of my abilities.</p>
+                <p class="block">From the outset, this project was a means to encapsulate the essence of online auctions 
+                  and commerce, inspired by the transformative impact of platforms that revolutionized the way we buy and sell. 
+                  The concept initially took shape in the form of a rudimentary console application, serving as a foundation for the bigger vision that lay ahead.</p>
+          </div>
+        </div>
+        <p class="block">As the project transitioned into a Portfolio Project for Holberton School, 
+          the scope expanded exponentially. The metamorphosis from a simple console application to a feature-rich, 
+          user-friendly GUI was driven by an unyielding determination to showcase not only technical aptitude but also the capacity to 
+          blend functionality with aesthetics.</p>
+        <p class="block">Through meticulous development, intricate design considerations, and an unwavering commitment to 
+          detail, this project is a testament to my journey as a developer. It underscores my evolution from a novice programmer to 
+          an aspiring professional, ready to navigate the complex terrain of software development.</p>
+        <p class="block">I am immensely proud to present this project as the culmination of my efforts. 
+          Its transformation from a concept inspired by personal encounters with online auctions into a tangible 
+          creation reflects my dedication to mastering the craft of programming. The project, conceived and brought to 
+          life by me, Joseph Nchimunya, stands as an embodiment of my journey, my aspirations, and my commitment to the world o
+          f software engineering.</p>
       </div>
       
       <p>This project was developed by Joseph Nchimunya:</p>
@@ -40,12 +58,12 @@
             <img src="{{ url_for('static', filename='font-icons/linkedin.svg')}}" width="70%" alt="LinkedIn"></a></li>
         <li class="link-cards"><a href="https://twitter.com/xvlll8two" target="_blank">
             <img src="{{ url_for('static', filename='font-icons/twitter.svg')}}" width="70%" alt="Twitter"></a></li>
-        <li class="link-cards"><a href="https://github.com/nchimunya-joseph" target="_blank">
+        <li class="link-cards"><a href="https://github.com/nchimunyascripts" target="_blank">
             <img src="{{ url_for('static', filename='font-icons/github.svg')}}" width="70%" alt="GitHub"></a></li>
       </ul>
 
       <p>For more details and to contribute to the project, please visit the <a
-          href="https://github.com/nchimunya-joseph/auction-marketplace" style="color: #dc3545;" target="_blank">GitHub repository</a>.</p>
+          href="https://github.com/nchimunyascripts/auction-marketplace" style="color: #dc3545;" target="_blank">GitHub repository</a>.</p>
 
       <p>Note: This project is part of the Holberton School curriculum. Learn more about Holberton at <a
           href="https://www.holbertonschool.com" style="color: #dc3545;" target="_blank">Holberton School</a>.</p>
@@ -54,7 +72,7 @@
     <section id="features" style="margin-bottom: 20px;">
       <h2>Key Features</h2>
       <div class="features-container">
-        <div class="card bg-dark text-white mb-3" style="border: none;">
+        <div class="card bg-dark text-white mb-3 block" style="border: none;">
           <img class="card-img" src="{{ url_for('static', filename='img/cover-img.jpg')}}" style="max-height: 250px;" alt="Card image">
           <div class="card-img-overlay">
             <h5 class="card-title">Auction Management</h5>
@@ -63,7 +81,7 @@
           </div>
         </div>
 
-        <div class="card bg-dark text-white mb-3" style="border: none;">
+        <div class="card bg-dark text-white mb-3 block" style="border: none;">
           <img class="card-img" src="{{ url_for('static', filename='img/cover-img-2.jpg')}}" style="max-height: 250px;" alt="Card image">
           <div class="card-img-overlay">
             <h5 class="card-title">Auction Listing</h5>
@@ -72,7 +90,7 @@
           </div>
         </div>
 
-        <div class="card bg-dark text-white mt-3" style="border: none;">
+        <div class="card bg-dark text-white mt-3 block" style="border: none;">
           <img class="card-img" src="{{ url_for('static', filename='img/cover-img-3.jpg')}}" style="max-height: 250px;" alt="Card image">
           <div class="card-img-overlay">
             <h5 class="card-title">Watchlist</h5>
@@ -94,8 +112,8 @@
         <div style="flex: 1; min-width: 200px; padding: 20px;">
             <h3>Quick Links</h3>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="#" style="color: white; text-decoration: none;">Home</a></li>
-                <li><a href="#" style="color: white; text-decoration: none;">Auctions</a></li>
+                <li><a href="{{ url_for('auctions.auctions') }}" style="color: white; text-decoration: none;">Home</a></li>
+                <li><a href="{{ url_for('auctions.auctions') }}" style="color: white; text-decoration: none;">Auctions</a></li>
                 <li><a href="#" style="color: white; text-decoration: none;">Categories</a></li>
                 <li><a href="#" style="color: white; text-decoration: none;">Contact Us</a></li>
             </ul>
@@ -105,7 +123,7 @@
         <div style="flex: 1; min-width: 200px; padding: 20px;">
             <h3>Contact Us</h3>
             <p>Kabangwe St., Kabangwe Off Great North Road, Zambia</p>
-            <p>Email: support@auctionmarketplace.com</p>
+            <p>Email: nchimunya.backlogcode@gmail.com</p>
             <p>Phone: +26 (097) 662-4664</p>
         </div>
 

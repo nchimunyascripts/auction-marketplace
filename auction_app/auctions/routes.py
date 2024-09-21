@@ -13,16 +13,16 @@ def auctions():
     page = request.args.get('page', 1, type=int)
     auctions = Auction.query.order_by(Auction.date_posted.desc()).paginate(page=page, per_page=6)
     return render_template('list_auctions.html', title="Home", auctions=auctions)
-
 @auction_.route('/new_auction', methods=['GET', 'POST'])
 @login_required
 def new_auction():
     """Auction List"""
     form = CreateAuctionForm()
     if form.validate_on_submit():
-        # item_picture = save_item_picture(form.item_image_file.data)
+        if form.item_image_file.data:
+            item_picture = save_item_picture(form.item_image_file.data)
         auction = Auction(title=form.title.data, description=form.description.data,
-                          initial_bid=form.initial_bid.data, 
+                          initial_bid=form.initial_bid.data, image_file=item_picture,
                           end_date=form.end_date.data, bid=current_user)
         db.session.add(auction)
         db.session.commit()

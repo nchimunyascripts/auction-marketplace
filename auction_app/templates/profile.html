@@ -3,16 +3,8 @@
     <div class="container">
       <div class="row mt-2 mb-4">
       <div class="col-md-4">
-        <h3>Your Auctions</h3>
-        {% if auctions %}
-          <ul class="list-group list-group-flush">
-            {% for auction in auctions %}
-              <li class="list-group-item">{{ auction }}</li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <h1 class="display-2">No auctions created yet.</h1>
-        {% endif %}
+        <h3>Updates</h3>
+          <h1 class="display-2">Something Yet to come</h1>
       </div>
       <div class="col-md-8">
         <div class="message">
@@ -20,7 +12,7 @@
             <img src="{{ image_file }}" alt="" class="rounded-circle account-img">
             <div>
               <h2>{{ current_user.username }}</h2>
-              <p class="text-secondary">{{ current_user.email }}</p>
+              <p class="small-text">{{ current_user.email }}</p>
             </div>
           </div>
         </div>
